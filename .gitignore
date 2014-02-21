@@ -82,7 +82,17 @@ GSYMS
 GTAGS
 
 *.orig
+*.rej
+*.oc
+*.diff
+*.nooc
+*.patch
 *~
+*.list
+modules
+stock
+make.sh
+/out
 \#*#
 
 !.travis.yml
