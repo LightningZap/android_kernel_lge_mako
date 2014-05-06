@@ -1,5 +1,5 @@
 /*
- * drivers/cpufreq/cpufreq_smartass2.c
+ * drivers/cpufreq/cpufreq_smartassV2.c
  *
  * Copyright (C) 2010 Google, Inc.
  *
@@ -161,10 +161,10 @@ static unsigned long debug_mask;
 static int cpufreq_governor_smartass(struct cpufreq_policy *policy,
 		unsigned int event);
 
-#ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS2
+#ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASSV2
 static
 #endif
-struct cpufreq_governor cpufreq_gov_smartass2 = {
+struct cpufreq_governor cpufreq_gov_smartassV2 = {
 	.name = "smartassV2",
 	.governor = cpufreq_governor_smartass,
 	.max_transition_latency = 9000000,
@@ -846,10 +846,10 @@ static int __init cpufreq_smartass_init(void)
 
 	register_early_suspend(&smartass_power_suspend);
 
-	return cpufreq_register_governor(&cpufreq_gov_smartass2);
+	return cpufreq_register_governor(&cpufreq_gov_smartassV2);
 }
 
-#ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS2
+#ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASSV2
 fs_initcall(cpufreq_smartass_init);
 #else
 module_init(cpufreq_smartass_init);
@@ -857,7 +857,7 @@ module_init(cpufreq_smartass_init);
 
 static void __exit cpufreq_smartass_exit(void)
 {
-	cpufreq_unregister_governor(&cpufreq_gov_smartass2);
+	cpufreq_unregister_governor(&cpufreq_gov_smartassV2);
 	destroy_workqueue(up_wq);
 	destroy_workqueue(down_wq);
 }
@@ -865,5 +865,5 @@ static void __exit cpufreq_smartass_exit(void)
 module_exit(cpufreq_smartass_exit);
 
 MODULE_AUTHOR ("Erasmux");
-MODULE_DESCRIPTION ("'cpufreq_smartass2' - A smart cpufreq governor");
+MODULE_DESCRIPTION ("'cpufreq_smartassV2' - A smart cpufreq governor");
 MODULE_LICENSE ("GPL");
