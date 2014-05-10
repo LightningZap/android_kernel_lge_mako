@@ -18,6 +18,9 @@
 #include <linux/hrtimer.h>
 
 #include "power.h"
+#ifdef CONFIG_SEC_DVFS
+#include <linux/cpufreq.h>
+#endif
 
 #define MAX_BUF 100
 
