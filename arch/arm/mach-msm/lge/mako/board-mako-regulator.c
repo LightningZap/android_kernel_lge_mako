@@ -378,7 +378,8 @@ VREG_CONSUMERS(EXT_DSV_LOAD) = {
 	{ \
 		.constraints = { \
 			.name		= _name, \
-			.valid_ops_mask	= REGULATOR_CHANGE_VOLTAGE, \
+			.valid_ops_mask	= REGULATOR_CHANGE_VOLTAGE | \
+							  REGULATOR_CHANGE_STATUS, \
 			.min_uV		= _min_uV, \
 			.max_uV		= _max_uV, \
 		}, \
@@ -495,27 +496,19 @@ struct regulator_init_data msm8064_saw_regulator_pdata_8921_s5 =
 	/*	      ID  vreg_name	       min_uV   max_uV */
 #ifdef CONFIG_CPU_OVERCLOCK
 	SAW_VREG_INIT(S5, "8921_s5",	       700000, 1450000);
-#else
-	SAW_VREG_INIT(S5, "8921_s5",	       850000, 1300000);
 #endif
 struct regulator_init_data msm8064_saw_regulator_pdata_8921_s6 =
 #ifdef CONFIG_CPU_OVERCLOCK
 	SAW_VREG_INIT(S6, "8921_s6",	       700000, 1450000);
-#else
-	SAW_VREG_INIT(S6, "8921_s6",	       850000, 1300000);
 #endif
 struct regulator_init_data msm8064_saw_regulator_pdata_8821_s0 =
 	/*	      ID       vreg_name	min_uV  max_uV */
 #ifdef CONFIG_CPU_OVERCLOCK
 	SAW_VREG_INIT(8821_S0, "8821_s0",       700000, 1450000);
-#else
-	SAW_VREG_INIT(8821_S0, "8821_s0",       850000, 1300000);
 #endif
 struct regulator_init_data msm8064_saw_regulator_pdata_8821_s1 =
 #ifdef CONFIG_CPU_OVERCLOCK
 	SAW_VREG_INIT(8821_S1, "8821_s1",       700000, 1450000);
-#else
-	SAW_VREG_INIT(8821_S1, "8821_s1",       850000, 1300000);
 #endif
 
 /* PM8921 regulator constraints */
@@ -573,7 +566,7 @@ apq8064_rpm_regulator_init_data[] __devinitdata = {
 	RPM_LDO(L22, 0, 1, 0, 1800000, 1800000, NULL,          0,     0),
 	RPM_LDO(L23, 0, 1, 0, 1800000, 1800000, NULL,          0,     0),
 #ifdef CONFIG_CPU_OVERCLOCK
-	RPM_LDO(L24, 0, 1, 1,  750000, 1250000, "8921_s1", 10000, 10000),
+	RPM_LDO(L24, 0, 1, 1,  700000, 1250000, "8921_s1", 10000, 10000),
 #else
 	RPM_LDO(L24, 0, 1, 1,  750000, 1150000, "8921_s1", 10000, 10000),
 #endif
