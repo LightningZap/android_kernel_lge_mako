@@ -92,4 +92,5 @@ GTAGS
 modules
 stock
 make.sh
+/out
 \#*#
