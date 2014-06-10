@@ -92,6 +92,7 @@ GTAGS
 modules
 stock
 make.sh
+/out
 \#*#
 
 !.travis.yml
