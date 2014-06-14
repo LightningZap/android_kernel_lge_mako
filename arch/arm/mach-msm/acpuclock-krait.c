@@ -144,6 +144,8 @@ static int __init get_uv_level(char *vdd_uv)
 		uv_bin = 5;
 	} else if (strcmp(vdd_uv, "6") == 0) {
 		uv_bin = 6;
+/* TODO: Leaving this one in here in case it is needed later
+<<<<<<< HEAD
 	} else if (strcmp(vdd_uv, "7") == 0) {
 		uv_bin = 7;
 	} else if (strcmp(vdd_uv, "8") == 0) {
@@ -152,6 +154,8 @@ static int __init get_uv_level(char *vdd_uv)
 		uv_bin = 9;
 	} else if (strcmp(vdd_uv, "10") == 0) {
 		uv_bin = 10;
+=======
+>>>>>>> 73585a0... CPUFREQ:rework of all tables. New implementation of freq's using PVS. */
 	} else {
 		uv_bin = 0;
 	}
@@ -1054,7 +1058,6 @@ ssize_t acpuclk_get_vdd_levels_str(char *buf) {
 		mutex_lock(&driver_lock);
 
 		for (i = 0; drv.acpu_freq_tbl[i].speed.khz; i++) {
-			/* updated to use uv required by 8x60 architecture - faux123 */
 			len += sprintf(buf + len, "%8lu: %8d\n", drv.acpu_freq_tbl[i].speed.khz,
 				drv.acpu_freq_tbl[i].vdd_core );
 		}
@@ -1064,7 +1067,6 @@ ssize_t acpuclk_get_vdd_levels_str(char *buf) {
 	return len;
 }
 
-/* updated to use uv required by 8x60 architecture - faux123 */
 void acpuclk_set_vdd(unsigned int khz, int vdd_uv) {
 
 	int i;
@@ -1090,18 +1092,19 @@ void acpuclk_set_vdd(unsigned int khz, int vdd_uv) {
 #endif	/* CONFIG_CPU_VOTALGE_TABLE */
 
 #ifdef CONFIG_CPU_FREQ_MSM
-static struct cpufreq_frequency_table freq_table[NR_CPUS][FREQ_TABLE_SIZE];
+static struct cpufreq_frequency_table freq_table[NR_CPUS][46];
 
 static void __init cpufreq_table_init(void)
 {
 	int cpu;
+	uint32_t limit_max_oc[4] = {arg_max_oc0, arg_max_oc1, arg_max_oc2, arg_max_oc3}; 
 
 	for_each_possible_cpu(cpu) {
 		int i, freq_cnt = 0;
 		/* Construct the freq_table tables from acpu_freq_tbl. */
 		for (i = 0; drv.acpu_freq_tbl[i].speed.khz != 0
 				&& freq_cnt < ARRAY_SIZE(*freq_table); i++) {
-			if (drv.acpu_freq_tbl[i].use_for_scaling) {
+			if (drv.acpu_freq_tbl[i].speed.khz <= limit_max_oc[cpu]) { 
 				freq_table[cpu][freq_cnt].index = freq_cnt;
 				freq_table[cpu][freq_cnt].frequency
 					= drv.acpu_freq_tbl[i].speed.khz;
@@ -1199,6 +1202,39 @@ static void krait_apply_vmin(struct acpu_level *tbl)
 	}
 }
 
+static void apply_undervolting(void)
+{
+	if (uv_bin == 6) {
+		drv.acpu_freq_tbl[0].vdd_core = 700000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 5) {
+		drv.acpu_freq_tbl[0].vdd_core = 750000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 4) {
+		drv.acpu_freq_tbl[0].vdd_core = 775000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 3) {
+		drv.acpu_freq_tbl[0].vdd_core = 800000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 2) {
+		drv.acpu_freq_tbl[0].vdd_core = 825000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 1) {
+		drv.acpu_freq_tbl[0].vdd_core = 850000;
+		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+}
+
 static int __init get_speed_bin(u32 pte_efuse)
 {
 	uint32_t speed_bin;
@@ -1231,6 +1267,8 @@ static int __init get_pvs_bin(u32 pte_efuse)
 	} else {
 		dev_info(drv.dev, "ACPU PVS: %d\n", pvs_bin);
 	}
+	
+	pvs_number = pvs_bin;
 
 	return pvs_bin;
 }
@@ -1302,6 +1340,9 @@ static void __init hw_init(void)
 
 	if (krait_needs_vmin())
 		krait_apply_vmin(drv.acpu_freq_tbl);
+
+	if (uv_bin)
+		apply_undervolting(); 
 
 	l2->hfpll_base = ioremap(l2->hfpll_phys_base, SZ_32);
 	BUG_ON(!l2->hfpll_base);
