@@ -286,11 +286,11 @@ static int __cpuinit msm_cpufreq_init(struct cpufreq_policy *policy)
 
 	policy->cpuinfo.transition_latency =
 		acpuclk_get_switch_time() * NSEC_PER_USEC;
-	/* set safe default min and max speeds */
+	/* set safe default min and max speeds
 #ifdef CONFIG_MSM_CPU_FREQ_SET_MIN_MAX
 	policy->max = CONFIG_MSM_CPU_FREQ_MAX;
 	policy->min = CONFIG_MSM_CPU_FREQ_MIN;
-#endif
+#endif */
 	return 0;
 }
 
