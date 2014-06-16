@@ -144,6 +144,14 @@ static int __init get_uv_level(char *vdd_uv)
 		uv_bin = 5;
 	} else if (strcmp(vdd_uv, "6") == 0) {
 		uv_bin = 6;
+	} else if (strcmp(vdd_uv, "7") == 0) {
+		uv_bin = 7;
+	} else if (strcmp(vdd_uv, "8") == 0) {
+		uv_bin = 8;
+	} else if (strcmp(vdd_uv, "9") == 0) {
+		uv_bin = 9;
+	} else if (strcmp(vdd_uv, "10") == 0) {
+		uv_bin = 10;
 	} else {
 		uv_bin = 0;
 	}
