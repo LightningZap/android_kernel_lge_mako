@@ -145,7 +145,6 @@ static int __init get_uv_level(char *vdd_uv)
 	} else if (strcmp(vdd_uv, "6") == 0) {
 		uv_bin = 6;
 /* TODO: Leaving this one in here in case it is needed later
-<<<<<<< HEAD
 	} else if (strcmp(vdd_uv, "7") == 0) {
 		uv_bin = 7;
 	} else if (strcmp(vdd_uv, "8") == 0) {
@@ -153,9 +152,7 @@ static int __init get_uv_level(char *vdd_uv)
 	} else if (strcmp(vdd_uv, "9") == 0) {
 		uv_bin = 9;
 	} else if (strcmp(vdd_uv, "10") == 0) {
-		uv_bin = 10;
-=======
->>>>>>> 73585a0... CPUFREQ:rework of all tables. New implementation of freq's using PVS. */
+		uv_bin = 10;*/
 	} else {
 		uv_bin = 0;
 	}
@@ -1205,32 +1202,32 @@ static void krait_apply_vmin(struct acpu_level *tbl)
 static void apply_undervolting(void)
 {
 	if (uv_bin == 6) {
-		drv.acpu_freq_tbl[0].vdd_core = 700000;
+		drv.acpu_freq_tbl[0].vdd_core = 600000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
 	if (uv_bin == 5) {
-		drv.acpu_freq_tbl[0].vdd_core = 750000;
+		drv.acpu_freq_tbl[0].vdd_core = 650000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
 	if (uv_bin == 4) {
-		drv.acpu_freq_tbl[0].vdd_core = 775000;
+		drv.acpu_freq_tbl[0].vdd_core = 675000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
 	if (uv_bin == 3) {
-		drv.acpu_freq_tbl[0].vdd_core = 800000;
+		drv.acpu_freq_tbl[0].vdd_core = 700000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
 	if (uv_bin == 2) {
-		drv.acpu_freq_tbl[0].vdd_core = 825000;
+		drv.acpu_freq_tbl[0].vdd_core = 725000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
 	if (uv_bin == 1) {
-		drv.acpu_freq_tbl[0].vdd_core = 850000;
+		drv.acpu_freq_tbl[0].vdd_core = 750000;
 		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 }
