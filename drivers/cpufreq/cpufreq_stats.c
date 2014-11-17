@@ -137,8 +137,8 @@ static ssize_t show_all_time_in_state(struct kobject *kobj,
 	ssize_t len = 0;
 	unsigned int i, cpu, freq, index;
 	struct all_cpufreq_stats *all_stat;
-
 	struct cpufreq_policy *policy;
+
 	len += scnprintf(buf + len, PAGE_SIZE - len, "freq\t\t");
 	for_each_possible_cpu(cpu) {
 		len += scnprintf(buf + len, PAGE_SIZE - len, "cpu%d\t\t", cpu);
@@ -420,7 +420,6 @@ static void cpufreq_allstats_create(unsigned int cpu)
 	unsigned int alloc_size, count = 0;
 	struct cpufreq_frequency_table *table = cpufreq_frequency_get_table(cpu);
 	struct all_cpufreq_stats *all_stat;
-
 	bool sort_needed = false;
 
 	if (!table)
@@ -593,17 +592,6 @@ static struct notifier_block notifier_policy_block = {
 static struct notifier_block notifier_trans_block = {
 	.notifier_call = cpufreq_stat_notifier_trans
 };
-
-static int compare_for_sort(const void *lhs_ptr, const void *rhs_ptr)
-{
-	unsigned int lhs = *(const unsigned int *)(lhs_ptr);
-	unsigned int rhs = *(const unsigned int *)(rhs_ptr);
-	if (lhs < rhs)
-		return -1;
-	if (lhs > rhs)
-		return 1;
-	return 0;
-}
 
 static int __init cpufreq_stats_init(void)
 {
