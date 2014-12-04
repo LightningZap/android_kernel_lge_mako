@@ -114,3 +114,4 @@ Config options
 9. read_idle_freq: frequency of inserting READ requests that will
    trigger idling. This is the time in Msec between inserting two READ
    requests
+
