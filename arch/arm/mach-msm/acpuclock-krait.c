@@ -50,7 +50,7 @@
 
 /** lightningzap defs  **/
 
-int uv_bin = 0;
+int uv_bin = 7;
 uint32_t arg_max_oc0 = 1836000;
 uint32_t arg_max_oc1 = 1836000;
 uint32_t arg_max_oc2 = 1836000;
@@ -130,9 +130,7 @@ __setup("max_oc3=", cpufreq_read_arg_max_oc3);
 
 static int __init get_uv_level(char *vdd_uv)
 {
-	if (strcmp(vdd_uv, "0") == 0) {
-		uv_bin = 0;
-	} else if (strcmp(vdd_uv, "1") == 0) {
+	if (strcmp(vdd_uv, "1") == 0) {
 		uv_bin = 1;
 	} else if (strcmp(vdd_uv, "2") == 0) {
 		uv_bin = 2;
@@ -144,17 +142,14 @@ static int __init get_uv_level(char *vdd_uv)
 		uv_bin = 5;
 	} else if (strcmp(vdd_uv, "6") == 0) {
 		uv_bin = 6;
-/* TODO: Leaving this one in here in case it is needed later
 	} else if (strcmp(vdd_uv, "7") == 0) {
 		uv_bin = 7;
 	} else if (strcmp(vdd_uv, "8") == 0) {
 		uv_bin = 8;
 	} else if (strcmp(vdd_uv, "9") == 0) {
 		uv_bin = 9;
-	} else if (strcmp(vdd_uv, "10") == 0) {
-		uv_bin = 10;*/
 	} else {
-		uv_bin = 0;
+		uv_bin = 7;
 	}
 	return 0;
 }
@@ -1201,33 +1196,48 @@ static void krait_apply_vmin(struct acpu_level *tbl)
 
 static void apply_undervolting(void)
 {
-	if (uv_bin == 6) {
+	if (uv_bin == 9) {
 		drv.acpu_freq_tbl[0].vdd_core = 600000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
-	if (uv_bin == 5) {
+	if (uv_bin == 8) {
 		drv.acpu_freq_tbl[0].vdd_core = 650000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
-	if (uv_bin == 4) {
-		drv.acpu_freq_tbl[0].vdd_core = 675000;
-	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
-	}
-
-	if (uv_bin == 3) {
+	if (uv_bin == 7) {
 		drv.acpu_freq_tbl[0].vdd_core = 700000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
-	if (uv_bin == 2) {
+	if (uv_bin == 6) {
 		drv.acpu_freq_tbl[0].vdd_core = 725000;
 	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 
-	if (uv_bin == 1) {
+	if (uv_bin == 5) {
 		drv.acpu_freq_tbl[0].vdd_core = 750000;
+	        printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 4) {
+		drv.acpu_freq_tbl[0].vdd_core = 775000;
+		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 3) {
+		drv.acpu_freq_tbl[0].vdd_core = 800000;
+		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 2) {
+		drv.acpu_freq_tbl[0].vdd_core = 825000;
+		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
+	}
+
+	if (uv_bin == 1) {
+		drv.acpu_freq_tbl[0].vdd_core = 850000;
 		printk(KERN_INFO "[lightningzap]: min_voltage='%i'\n", drv.acpu_freq_tbl[0].vdd_core );
 	}
 }
